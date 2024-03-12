@@ -1,0 +1,89 @@
+<div class="container">
+
+  <form class="row g-3 m-3 d-flex justify-content-center">
+
+    <div class="col-5">
+      <label for="inputWish" class="visually-hidden">Wish</label>
+      <input type="text" name="new-wish-text" class="form-control" placeholder="My Wish" [(ngModel)]="newWishText">
+    </div>
+    <div class="col-auto">
+      <button 
+      type="submit" 
+      class="btn btn-primary mb-3"
+      (click)="$event.preventDefault(); addWish()"
+      >Add</button>
+    </div>
+  </form>
+<div class="row mt-3">
+  <div class="col-sm-4">
+    <select 
+    class="form-select"
+    [(ngModel)]="listFilter"
+    >
+      <option value="0">All</option>
+      <option value="1">Fulfilled</option>
+      <option value="2">Unfulfilled</option>
+    </select>
+  </div>
+</div>
+  <!-- 3 APPROACHES for if else statement in Angular -->
+  <!-- 1. 2 ife statements -->
+  <!-- <div *ngIf="items.length === 0">
+    There are no wishlist to display
+  </div>
+  <ul *ngIf="items.length > 0" class="wish-list">
+    <li *ngFor="let item of items">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox">
+        <label class="form-check-label">
+          {{ item.wishText }}
+        </label>
+
+      </div>
+    </li>
+  </ul> -->
+
+  <!-- 2. if then else with ng templates   -->
+  <!-- <div *ngIf="items.length === 0; then noItems else showItems"></div>
+  <ng-template #noItems>
+    There are no wishlist to display
+  </ng-template>
+
+  <ng-template #showItems>
+    <ul *ngIf="items.length > 0" class="wish-list">
+      <li *ngFor="let item of items">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox">
+          <label class="form-check-label">
+            {{ item.wishText }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </ng-template> -->
+
+  <div class="row mt-3">
+  <!-- 3. if-else with ng templates   -->
+  <div *ngIf="visibleItems.length === 0; else showItems">
+    There are no wishlist to display
+  </div>
+  <ng-template #showItems>
+    <ul class="wish-list">
+      <li *ngFor="let item of visibleItems; index as ii">
+        <div class="form-check">
+          <input 
+          class="form-check-input" 
+          type="checkbox" 
+          [checked]="item.isComplete"
+          [attr.data-index]="ii"
+          (click)="toggleItem(item)"
+          >
+          <label class="form-check-label">
+            {{ item.wishText }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </ng-template>
+  </div>
+</div>
